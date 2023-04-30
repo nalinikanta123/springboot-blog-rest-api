@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	
 	@Value(value = "${data.exception.message1}")
 	private String message1;
 	@Value(value = "${data.exception.message2}")
@@ -16,8 +17,13 @@ public class GlobalExceptionHandler {
 	private String message3;
 
 	@ExceptionHandler(value = BlogNotFoundException.class)
-	public ResponseEntity blogNotFoundException(BlogNotFoundException blogNotFoundException) {
+	public ResponseEntity<String> blogNotFoundException(BlogNotFoundException blogNotFoundException) {
 		return new ResponseEntity<String>(message2, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(value = BlogAlreadyExistsException.class)
+	public ResponseEntity<String> blogNotFoundException(BlogAlreadyExistsException blogAlreadyExistsException) {
+		return new ResponseEntity<String>(message1, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(value = Exception.class)
